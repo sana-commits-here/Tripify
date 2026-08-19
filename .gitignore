@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Databases / generated data
+*.db
+*.sqlite3
+
+# IDE
+.vscode/
+
+# Large media
+*.mp4
