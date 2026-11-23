@@ -23,3 +23,6 @@ venv/
 # Build output
 dist/
 .vercel/
+
+.vercel
+.env*.local
