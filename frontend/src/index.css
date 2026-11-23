@@ -113,3 +113,60 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
+/* ---------- Itinerary markdown ---------- */
+.itinerary-md {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  overflow-wrap: anywhere;
+}
+.itinerary-md > *:first-child { margin-top: 0; }
+.itinerary-md h1,
+.itinerary-md h2 {
+  color: #38bdf8;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 28px 0 10px;
+  padding-top: 18px;
+  border-top: 1px solid #1e293b;
+}
+.itinerary-md > h1:first-child,
+.itinerary-md > h2:first-child { border-top: none; padding-top: 0; }
+.itinerary-md h3 {
+  color: #f8fafc;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 18px 0 6px;
+}
+.itinerary-md h4 { color: #f8fafc; font-size: 0.95rem; font-weight: 600; margin: 14px 0 6px; }
+.itinerary-md p { margin: 0 0 10px; }
+.itinerary-md ul,
+.itinerary-md ol { padding-left: 20px; margin: 0 0 12px; }
+.itinerary-md li { margin-bottom: 6px; }
+.itinerary-md li::marker { color: #38bdf8; }
+.itinerary-md strong { color: #f8fafc; font-weight: 700; }
+.itinerary-md a { color: #38bdf8; }
+.itinerary-md hr { border: none; border-top: 1px solid #1e293b; margin: 20px 0; }
+.itinerary-md code { background: #1e293b; padding: 1px 6px; border-radius: 4px; font-size: 0.85em; }
+.itinerary-table-wrap {
+  overflow-x: auto;
+  margin: 8px 0 16px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+}
+.itinerary-md table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.itinerary-md th {
+  background: #1e293b;
+  color: #f8fafc;
+  text-align: left;
+  font-weight: 600;
+  padding: 10px 12px;
+  white-space: nowrap;
+}
+.itinerary-md td {
+  padding: 9px 12px;
+  border-top: 1px solid #1e293b;
+  vertical-align: top;
+}
+.itinerary-md tbody tr:nth-child(even) td { background: rgba(30, 41, 59, 0.45); }

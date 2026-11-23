@@ -44,7 +44,7 @@ export default function Dashboard() {
     if (!currentTrip?.id) return;
     setModifying(true);
     try {
-      const data = await modifyItinerary(currentTrip.id, feedback);
+      const data = await modifyItinerary(currentTrip.id, feedback, currentTrip);
       setCurrentTrip((prev) => ({
         ...prev,
         itinerary: data.itinerary

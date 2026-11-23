@@ -6,6 +6,7 @@ _in_memory_docs = []
 
 def populate_knowledge_base(places: list):
     global _in_memory_docs
+    _in_memory_docs = []  # one destination at a time; don't leak POIs between trips
     for p in places:
         if p.get("name"):
             _in_memory_docs.append({

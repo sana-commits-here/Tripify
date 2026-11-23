@@ -253,3 +253,18 @@ curl -X 'POST' \
 ```
 
 ```
+---
+
+## 🌐 Deploying to Vercel
+
+The repo deploys as one Vercel project: the React app is built from `frontend/` and the FastAPI backend runs as a Python function at `api/index.py` (all `/api/*` routes).
+
+Set these environment variables in the Vercel project:
+
+| Variable | Purpose |
+| --- | --- |
+| `GROQ_API_KEY` | Hosted Llama 3 via [Groq](https://console.groq.com) (required in production) |
+| `OPENTRIPMAP_API_KEY` | Optional extra attraction data; without it the map pins the places the itinerary recommends |
+| `GROQ_MODEL` | Optional; otherwise the best available Groq model is picked automatically (currently `openai/gpt-oss-120b`) |
+
+Without `GROQ_API_KEY` the backend falls back to a local Ollama server, so local development works as before. Trip history on Vercel is stored in temporary SQLite and resets when the function restarts.

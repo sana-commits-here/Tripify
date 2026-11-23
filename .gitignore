@@ -20,3 +20,9 @@ venv/
 
 # Large media
 *.mp4
+# Build output
+dist/
+.vercel/
+
+.vercel
+.env*.local
