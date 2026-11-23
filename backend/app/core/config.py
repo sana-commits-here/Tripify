@@ -10,7 +10,7 @@ _default_db = "sqlite:////tmp/tripify.db" if os.getenv("VERCEL") else "sqlite://
 class Settings:
     OPENTRIPMAP_API_KEY: str = os.getenv("OPENTRIPMAP_API_KEY", "")
     # Hosted LLM (used when GROQ_API_KEY is set, e.g. on Vercel)
-    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY") or os.getenv("GROK_API_KEY", "")
     GROQ_MODEL: str = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
     # Local LLM fallback for development
     OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
