@@ -11,6 +11,10 @@ class TripRequest(BaseModel):
 class TripModifyRequest(BaseModel):
     trip_id: int
     user_feedback: str
+    # Sent by the client so edits still work if the serverless DB was reset
+    destination: Optional[str] = None
+    existing_itinerary: Optional[str] = None
+    days: Optional[int] = None
 
 class PlaceItem(BaseModel):
     name: str

@@ -54,7 +54,7 @@ export default function Planner() {
       setCurrentTrip(data);
       fetchHistory();
     } catch (err) {
-      alert('Error generating itinerary. Ensure your FastAPI server and Ollama instance are running.');
+      alert('Error generating itinerary. Please try again in a moment.');
     } finally {
       setLoading(false);
     }
@@ -64,7 +64,7 @@ export default function Planner() {
     if (!currentTrip?.id) return;
     setModifying(true);
     try {
-      const data = await modifyItinerary(currentTrip.id, feedback);
+      const data = await modifyItinerary(currentTrip.id, feedback, currentTrip);
       setCurrentTrip((prev) => ({ ...prev, itinerary: data.itinerary }));
     } catch (err) {
       alert('Error updating itinerary.');

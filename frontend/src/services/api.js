@@ -1,16 +1,20 @@
 import axios from 'axios';
 
-const API_BASE = 'http://127.0.0.1:8000/api';
+// Same-origin /api (Vercel function in production, Vite proxy to FastAPI in dev).
+const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 export const generateItinerary = async (tripData) => {
   const response = await axios.post(`${API_BASE}/generate`, tripData);
   return response.data;
 };
 
-export const modifyItinerary = async (tripId, userFeedback) => {
+export const modifyItinerary = async (tripId, userFeedback, trip = {}) => {
   const response = await axios.post(`${API_BASE}/modify`, {
     trip_id: tripId,
-    user_feedback: userFeedback
+    user_feedback: userFeedback,
+    destination: trip.destination,
+    existing_itinerary: trip.itinerary,
+    days: trip.days
   });
   return response.data;
 };

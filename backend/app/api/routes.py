@@ -9,9 +9,12 @@ router = APIRouter()
 
 @router.post("/generate", response_model=TripResponse)
 def generate_trip(req: TripRequest, db: Session = Depends(get_db)):
-    itinerary_text, places = create_full_itinerary(
-        req.destination, req.days, req.budget, req.travel_style, req.interests
-    )
+    try:
+        itinerary_text, places = create_full_itinerary(
+            req.destination, req.days, req.budget, req.travel_style, req.interests
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"AI service unavailable: {exc}")
     
     db_trip = Trip(
         destination=req.destination,
@@ -36,23 +39,29 @@ def generate_trip(req: TripRequest, db: Session = Depends(get_db)):
 @router.post("/modify", response_model=TripResponse)
 def modify_trip(req: TripModifyRequest, db: Session = Depends(get_db)):
     db_trip = db.query(Trip).filter(Trip.id == req.trip_id).first()
-    if not db_trip:
+    if not db_trip and not (req.destination and req.existing_itinerary):
         raise HTTPException(status_code=404, detail="Trip not found")
-        
-    updated_itinerary = modify_existing_itinerary(
-        destination=db_trip.destination,
-        existing_itinerary=db_trip.itinerary_data,
-        feedback=req.user_feedback
-    )
-    
-    db_trip.itinerary_data = updated_itinerary
-    db.commit()
-    db.refresh(db_trip)
-    
+
+    destination = db_trip.destination if db_trip else req.destination
+    existing = db_trip.itinerary_data if db_trip else req.existing_itinerary
+
+    try:
+        updated_itinerary = modify_existing_itinerary(
+            destination=destination,
+            existing_itinerary=existing,
+            feedback=req.user_feedback
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"AI service unavailable: {exc}")
+
+    if db_trip:
+        db_trip.itinerary_data = updated_itinerary
+        db.commit()
+
     return TripResponse(
-        id=db_trip.id,
-        destination=db_trip.destination,
-        days=db_trip.days,
+        id=req.trip_id,
+        destination=destination,
+        days=db_trip.days if db_trip else (req.days or 1),
         itinerary=updated_itinerary,
         places=[]
     )
