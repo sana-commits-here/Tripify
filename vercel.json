@@ -4,7 +4,7 @@
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "functions": {
-    "api/index.py": { "includeFiles": "backend/app/**", "maxDuration": 60 }
+    "api/index.py": { "includeFiles": "backend/app/**", "maxDuration": 120 }
   },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index" },

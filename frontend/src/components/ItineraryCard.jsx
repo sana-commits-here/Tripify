@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { CalendarDays, MapPin } from 'lucide-react';
+import remarkGfm from 'remark-gfm';
+import { CalendarDays } from 'lucide-react';
+
+// Older saved itineraries may contain HTML line breaks inside table cells.
+const cleanMarkdown = (text) => text.replace(/<br\s*\/?>/gi, ' · ');
 
 export default function ItineraryCard({ trip }) {
   if (!trip?.itinerary) return null;
@@ -28,49 +32,18 @@ export default function ItineraryCard({ trip }) {
         </div>
       </div>
 
-      <div
-        className="markdown-body"
-        style={{
-          fontSize: '0.95rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px'
-        }}
-      >
+      <div className="itinerary-md">
         <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({ children }) => (
-              <h1 style={{ color: '#38bdf8', fontSize: '1.4rem', fontWeight: 800, marginTop: '16px', marginBottom: '8px' }}>
-                {children}
-              </h1>
-            ),
-            h2: ({ children }) => (
-              <h2 style={{ color: '#38bdf8', fontSize: '1.25rem', fontWeight: 700, marginTop: '16px', marginBottom: '8px' }}>
-                {children}
-              </h2>
-            ),
-            h3: ({ children }) => (
-              <h3 style={{ color: '#f8fafc', fontSize: '1.1rem', fontWeight: 600, marginTop: '12px', marginBottom: '6px' }}>
-                {children}
-              </h3>
-            ),
-            p: ({ children }) => (
-              <p style={{ color: '#cbd5e1', marginBottom: '10px' }}>{children}</p>
-            ),
-            ul: ({ children }) => (
-              <ul style={{ paddingLeft: '20px', marginBottom: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                {children}
-              </ul>
-            ),
-            li: ({ children }) => (
-              <li style={{ color: '#cbd5e1' }}>{children}</li>
-            ),
-            strong: ({ children }) => (
-              <strong style={{ color: '#f8fafc', fontWeight: 700 }}>{children}</strong>
+            table: ({ children }) => (
+              <div className="itinerary-table-wrap">
+                <table>{children}</table>
+              </div>
             )
           }}
         >
-          {trip.itinerary}
+          {cleanMarkdown(trip.itinerary)}
         </ReactMarkdown>
       </div>
     </div>

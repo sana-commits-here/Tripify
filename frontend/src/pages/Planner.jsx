@@ -51,7 +51,7 @@ export default function Planner() {
     setSelectedDay('ALL');
     try {
       const data = await generateItinerary(formData);
-      setCurrentTrip(data);
+      setCurrentTrip({ ...data, budget: formData.budget });
       fetchHistory();
     } catch (err) {
       alert('Error generating itinerary. Please try again in a moment.');
@@ -65,7 +65,11 @@ export default function Planner() {
     setModifying(true);
     try {
       const data = await modifyItinerary(currentTrip.id, feedback, currentTrip);
-      setCurrentTrip((prev) => ({ ...prev, itinerary: data.itinerary }));
+      setCurrentTrip((prev) => ({
+        ...prev,
+        itinerary: data.itinerary,
+        places: data.places?.length ? data.places : prev.places
+      }));
     } catch (err) {
       alert('Error updating itinerary.');
     } finally {
@@ -159,7 +163,7 @@ export default function Planner() {
             AI Travel Studio
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginTop: '4px' }}>
-            Real-time geospatial POI ingestion with local Llama 3.2 synthesis.
+            AI itineraries with every recommended place pinned on the map.
           </p>
         </div>
 
@@ -410,7 +414,7 @@ export default function Planner() {
                 Synthesizing Itinerary...
               </h3>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', maxWidth: '440px', margin: '0 auto' }}>
-                Fetching verified OpenTripMap coordinates, building vector context, and prompting local Llama 3.2.
+                Planning your days, estimating costs, and pinning each place on the map.
               </p>
             </div>
           ) : currentTrip ? (

@@ -40,8 +40,8 @@ export default function Home() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginTop: '48px' }}>
         <div className="glass-card">
           <Zap color="#38bdf8" size={32} style={{ marginBottom: '14px' }} />
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#f8fafc', marginBottom: '8px' }}>Llama 3.2 Intelligence</h3>
-          <p style={{ fontSize: '0.9rem', color: '#94a3b8', lineHeight: 1.5 }}>Low-latency itinerary creation with Llama 3 on Groq, or fully local through Ollama.</p>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#f8fafc', marginBottom: '8px' }}>Open LLM Intelligence</h3>
+          <p style={{ fontSize: '0.9rem', color: '#94a3b8', lineHeight: 1.5 }}>Fast itinerary creation with open-weight models on Groq, or fully local through Ollama.</p>
         </div>
         <div className="glass-card">
           <Map color="#10b981" size={32} style={{ marginBottom: '14px' }} />

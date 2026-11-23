@@ -14,7 +14,7 @@ export default function About() {
           <div className="glass-card">
             <Cpu size={24} color="#38bdf8" style={{ marginBottom: '8px' }} />
             <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#f8fafc', marginBottom: '4px' }}>Local LLM Core</h3>
-            <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Powered by Llama 3 served through Groq in the cloud, with Ollama supported for fully local inference.</p>
+            <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Powered by open-weight LLMs served through Groq in the cloud, with Ollama supported for fully local inference.</p>
           </div>
           <div className="glass-card">
             <Map size={24} color="#10b981" style={{ marginBottom: '8px' }} />

@@ -46,7 +46,7 @@ def modify_trip(req: TripModifyRequest, db: Session = Depends(get_db)):
     existing = db_trip.itinerary_data if db_trip else req.existing_itinerary
 
     try:
-        updated_itinerary = modify_existing_itinerary(
+        updated_itinerary, new_places = modify_existing_itinerary(
             destination=destination,
             existing_itinerary=existing,
             feedback=req.user_feedback
@@ -63,9 +63,22 @@ def modify_trip(req: TripModifyRequest, db: Session = Depends(get_db)):
         destination=destination,
         days=db_trip.days if db_trip else (req.days or 1),
         itinerary=updated_itinerary,
-        places=[]
+        places=new_places
     )
 
 @router.get("/history")
 def get_trip_history(db: Session = Depends(get_db)):
     return db.query(Trip).order_by(Trip.created_at.desc()).all()
+
+
+@router.get("/health")
+def health():
+    """Which AI backend and model the API is using (no secrets)."""
+    from app.core.config import settings
+    from app.services.llm import current_model
+    if not settings.GROQ_API_KEY:
+        return {"llm": "ollama", "model": settings.OLLAMA_MODEL}
+    try:
+        return {"llm": "groq", "model": current_model()}
+    except Exception as exc:
+        return {"llm": "groq", "model": None, "error": str(exc)[:200]}
